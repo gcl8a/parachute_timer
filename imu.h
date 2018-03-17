@@ -60,7 +60,7 @@ void SetupAccel()
   
   // [scale] sets the full-scale range of the accelerometer.
   // accel scale can be 2, 4, 8, or 16
-  imu.settings.accel.scale = 16; // Set accel scale to +/-8g.
+  imu.settings.accel.scale = 16; 
   
   // [sampleRate] sets the output data rate (ODR) of the
   // accelerometer. ONLY APPLICABLE WHEN THE GYROSCOPE IS
