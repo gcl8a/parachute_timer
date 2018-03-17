@@ -9,7 +9,7 @@ BMA250 imu;
 
 int SetupIMU()
 {
-  imu.begin(BMA250_range_2g, BMA250_update_time_64ms);//This sets up the BMA250 accelerometer
+  imu.begin(BMA250_range_8g, BMA250_update_time_8ms);//This sets up the BMA250 accelerometer
   return 1;
 }
 

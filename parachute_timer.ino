@@ -6,7 +6,7 @@
 //define the display
 TinyScreen display = TinyScreen(TinyScreenPlus);
 
-#define GRAVITY 1366 //with accelerometer set to  +-16g full scale => 0.732 mg/LSB => 1g = 1366
+#define GRAVITY 66 //with accelerometer set to  +-8g full scale 
 
 //define the states of the system -- see state diagram
 enum ACCEL_STATE {RESETTING, STANDBY, READY, FREEFALL, CHUTE, LANDED};
@@ -15,10 +15,10 @@ enum ACCEL_STATE {RESETTING, STANDBY, READY, FREEFALL, CHUTE, LANDED};
 #define FALL_THRESHOLD (GRAVITY / 3)
 
 //threshold for detecting landing
-#define LAND_THRESHOLD (5 * GRAVITY)  
+#define LAND_THRESHOLD (3 * GRAVITY)  
 
 //threshold for detecting if the system is still before dropping
-#define WAIT_THRESHOLD ((GRAVITY * 7) / 8)  
+#define WAIT_THRESHOLD ((GRAVITY * 1) / 8)  
 
 //length of time system must be "still" before dropping
 #define WAIT_TIME 3000
@@ -115,12 +115,12 @@ void loop(void)
   {
     imu.readAccel();
 
-    float ax = imu.ax;
-    float ay = imu.ay;
-    float az = imu.az;
+    int16_t ax = imu.ax;
+    int16_t ay = imu.ay;
+    int16_t az = imu.az;
 
     //magnitude
-    float accel = sqrt(ax * ax + ay * ay + az * az);
+    int16_t accel = sqrt(ax * ax + ay * ay + az * az);
 
     SerialMonitor.println(accel);
 
