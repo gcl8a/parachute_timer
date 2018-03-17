@@ -35,7 +35,7 @@ uint32_t landTime = 0;
 #ifdef SERIAL_PORT_MONITOR
   #define SerialMonitor SERIAL_PORT_MONITOR
 #else
-  #define SerialMonitor Serial
+  #define SerialMonitor SerialUSB
 #endif
 
 void setup()
