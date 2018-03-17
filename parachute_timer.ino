@@ -1,3 +1,5 @@
+//Branch for Bosch BMA250 accelerometer (not the 9-axis IMU)
+
 #include "imu.h"
 #include <TinyScreen.h>
 
@@ -21,8 +23,8 @@ enum ACCEL_STATE {RESETTING, STANDBY, READY, FREEFALL, CHUTE, LANDED};
 //length of time system must be "still" before dropping
 #define WAIT_TIME 3000
 
-//minimum flight time
-#define MIN_TIME 500 //minimum time for impact based on free fall -- don't want false positive when chute opens
+//minimum time for impact based on free fall -- don't want false positive when chute opens
+#define MIN_TIME 500 
 
 //start at resetting
 ACCEL_STATE state = RESETTING;
@@ -41,11 +43,15 @@ uint32_t landTime = 0;
 void setup()
 {
   SerialMonitor.begin(115200);
-  //while (!SerialMonitor) {} // Uncomment this if you want to wait for the Serial monitor to open -- but then you must use it
-
+  
+  // Uncomment the next line if you want to wait for the Serial monitor to open
+  // but then you MUST use it; otherwise, your program will hang!
+  while (!SerialMonitor) {} 
+  
   SerialMonitor.println("Initializing..."); //let us know we're talking
 
   //initialize the IMU
+  Wire.begin();
   if (!SetupIMU()) //see imu.h for details of what this does
   {
     SerialMonitor.println("Failed to communicate with LSM9DS1.");
@@ -105,7 +111,7 @@ void loop(void)
   }
   
   //if there is new accelerometer data available
-  if(imu.accelAvailable())
+  if(1)//imu.accelAvailable())
   {
     imu.readAccel();
 
@@ -115,6 +121,8 @@ void loop(void)
 
     //magnitude
     float accel = sqrt(ax * ax + ay * ay + az * az);
+
+    SerialMonitor.println(accel);
 
     if (state == STANDBY)
     {
